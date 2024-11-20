@@ -13,7 +13,7 @@ public class UserRoleBuilder : IEntityTypeConfiguration<IdentityUserRole<string>
         builder.HasData(
             new IdentityUserRole<string>
             {
-                RoleId = "19790536-5348-4397-857f-ba8dc02fa52e",
+                RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7210",
                 UserId = "0e0a5a69-8c2a-4a44-ae2e-c9e5bba3a947"
             },
             new IdentityUserRole<string>
