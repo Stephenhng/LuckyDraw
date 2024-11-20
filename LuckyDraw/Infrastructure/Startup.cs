@@ -24,22 +24,24 @@ public class Startup (IConfiguration configuration)
         services.AddScoped<IdentityRedirectManager>();
         services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 
-        services.AddAuthentication(options =>
-        {
-            options.DefaultScheme = IdentityConstants.ApplicationScheme;
-            options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-        }).AddIdentityCookies();
-
         var connectionString = configuration.GetConnectionString("LuckyDraw") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
         services.AddDbContextPool<ApplicationDbContext>(options => options
             .UseSqlServer(connectionString)
             .UseLazyLoadingProxies());
         services.AddDatabaseDeveloperPageExceptionFilter();
 
-        services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            .AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddSignInManager()
-            .AddDefaultTokenProviders();
+        services
+               .AddIdentity<ApplicationUser, IdentityRole>()
+               .AddEntityFrameworkStores<ApplicationDbContext>()
+               .AddDefaultTokenProviders();
+
+        services.AddAuthentication(options =>
+        {
+            options.DefaultScheme = IdentityConstants.ApplicationScheme;
+            options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+        });
+
+        services.AddHttpContextAccessor();
 
         services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
@@ -66,6 +68,8 @@ public class Startup (IConfiguration configuration)
 
         application.UseStaticFiles();
         application.UseRouting();
+        application.UseAuthentication();
+        application.UseAuthorization();
         application.UseAntiforgery();
 
         application.UseEndpoints(endpoints =>
