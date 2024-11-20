@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LuckyDraw.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241120005346_CreateInitialMigration")]
+    [Migration("20241120015219_CreateInitialMigration")]
     partial class CreateInitialMigration
     {
         /// <inheritdoc />
@@ -38,7 +38,8 @@ namespace LuckyDraw.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -62,16 +63,19 @@ namespace LuckyDraw.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -90,7 +94,65 @@ namespace LuckyDraw.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.ToTable("User", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "0e0a5a69-8c2a-4a44-ae2e-c9e5bba3a947",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "bc1b98fc-6e6f-4ebf-96fa-5c72b63d9af3",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "MAIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBzA4F7yDvAljB5wx8TaKhGTxW1dEUH/feK2S5IT1sDmKTkhnkx0CuyivKl+1kPmoQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "a1b2308e-9a4d-4b1f-b671-d16f44e96b8d",
+                            TwoFactorEnabled = false,
+                            UserName = "main"
+                        },
+                        new
+                        {
+                            Id = "1f4e20e2-5c0e-4c79-a5c9-28b0f4a8b1dd",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "5c6a2e3b-1b7d-46a3-9f7e-60a5b0c29bcd",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "VIEW",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBzA4F7yDvAljB5wx8TaKhGTxW1dEUH/feK2S5IT1sDmKTkhnkx0CuyivKl+1kPmoQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "f64e5b1f-7a30-4f5a-91bb-1f3e6388a948",
+                            TwoFactorEnabled = false,
+                            UserName = "view"
+                        },
+                        new
+                        {
+                            Id = "2d3c56d8-6b6a-4c1e-a29e-5d3b0c6a8d2c",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "9f28d1b6-7a31-4ecb-9a92-604bafca76b7",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "ACTION",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBzA4F7yDvAljB5wx8TaKhGTxW1dEUH/feK2S5IT1sDmKTkhnkx0CuyivKl+1kPmoQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "67d7a8b5-0c6d-4638-bb3e-1c726c8cba53",
+                            TwoFactorEnabled = false,
+                            UserName = "action"
+                        },
+                        new
+                        {
+                            Id = "3e3b28fa-3c2a-4b49-b7b2-a8c3b4e6e92d",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "3d98c1e5-5b30-4df7-8a81-1b62a7bc5d1d",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "RESULT",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBzA4F7yDvAljB5wx8TaKhGTxW1dEUH/feK2S5IT1sDmKTkhnkx0CuyivKl+1kPmoQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "be1f6b3d-6c0d-472a-a9d6-2f3a5b8c7d0b",
+                            TwoFactorEnabled = false,
+                            UserName = "result"
+                        });
                 });
 
             modelBuilder.Entity("LuckyDraw.Domain.Participant", b =>
@@ -212,120 +274,6 @@ namespace LuckyDraw.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("RoleClaim", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasMaxLength(512)
-                        .HasColumnType("nvarchar(512)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("User", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "0e0a5a69-8c2a-4a44-ae2e-c9e5bba3a947",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "bc1b98fc-6e6f-4ebf-96fa-5c72b63d9af3",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedUserName = "MAIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFEVPOBsRrEY5nBo2haaS+N56tzDwtP4Hnitk2zA9F0psYVbTYmnyEPjvfDou9/Ouw==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "a1b2308e-9a4d-4b1f-b671-d16f44e96b8d",
-                            TwoFactorEnabled = false,
-                            UserName = "main"
-                        },
-                        new
-                        {
-                            Id = "1f4e20e2-5c0e-4c79-a5c9-28b0f4a8b1dd",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "5c6a2e3b-1b7d-46a3-9f7e-60a5b0c29bcd",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedUserName = "VIEW",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFEVPOBsRrEY5nBo2haaS+N56tzDwtP4Hnitk2zA9F0psYVbTYmnyEPjvfDou9/Ouw==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "f64e5b1f-7a30-4f5a-91bb-1f3e6388a948",
-                            TwoFactorEnabled = false,
-                            UserName = "view"
-                        },
-                        new
-                        {
-                            Id = "2d3c56d8-6b6a-4c1e-a29e-5d3b0c6a8d2c",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "9f28d1b6-7a31-4ecb-9a92-604bafca76b7",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedUserName = "ACTION",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFEVPOBsRrEY5nBo2haaS+N56tzDwtP4Hnitk2zA9F0psYVbTYmnyEPjvfDou9/Ouw==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "67d7a8b5-0c6d-4638-bb3e-1c726c8cba53",
-                            TwoFactorEnabled = false,
-                            UserName = "action"
-                        },
-                        new
-                        {
-                            Id = "3e3b28fa-3c2a-4b49-b7b2-a8c3b4e6e92d",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "3d98c1e5-5b30-4df7-8a81-1b62a7bc5d1d",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedUserName = "RESULT",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFEVPOBsRrEY5nBo2haaS+N56tzDwtP4Hnitk2zA9F0psYVbTYmnyEPjvfDou9/Ouw==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "be1f6b3d-6c0d-472a-a9d6-2f3a5b8c7d0b",
-                            TwoFactorEnabled = false,
-                            UserName = "result"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
