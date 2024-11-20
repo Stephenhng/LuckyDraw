@@ -243,6 +243,12 @@ namespace LuckyDraw.Migrations
                             Id = "19790536-5348-4397-857f-ba8dc02fa52e",
                             Name = "User",
                             NormalizedName = "USER"
+                        },
+                        new
+                        {
+                            Id = "2c5e174e-3b0e-446f-86af-483d56fd7210",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
                         });
                 });
 
@@ -341,7 +347,7 @@ namespace LuckyDraw.Migrations
                         new
                         {
                             UserId = "0e0a5a69-8c2a-4a44-ae2e-c9e5bba3a947",
-                            RoleId = "19790536-5348-4397-857f-ba8dc02fa52e"
+                            RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7210"
                         },
                         new
                         {

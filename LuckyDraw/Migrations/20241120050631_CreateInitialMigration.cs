@@ -213,7 +213,11 @@ namespace LuckyDraw.Migrations
             migrationBuilder.InsertData(
                 table: "Role",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "19790536-5348-4397-857f-ba8dc02fa52e", null, "User", "USER" });
+                values: new object[,]
+                {
+                    { "19790536-5348-4397-857f-ba8dc02fa52e", null, "User", "USER" },
+                    { "2c5e174e-3b0e-446f-86af-483d56fd7210", null, "Admin", "ADMIN" }
+                });
 
             migrationBuilder.InsertData(
                 table: "User",
@@ -231,7 +235,7 @@ namespace LuckyDraw.Migrations
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { "19790536-5348-4397-857f-ba8dc02fa52e", "0e0a5a69-8c2a-4a44-ae2e-c9e5bba3a947" },
+                    { "2c5e174e-3b0e-446f-86af-483d56fd7210", "0e0a5a69-8c2a-4a44-ae2e-c9e5bba3a947" },
                     { "19790536-5348-4397-857f-ba8dc02fa52e", "1f4e20e2-5c0e-4c79-a5c9-28b0f4a8b1dd" },
                     { "19790536-5348-4397-857f-ba8dc02fa52e", "2d3c56d8-6b6a-4c1e-a29e-5d3b0c6a8d2c" },
                     { "19790536-5348-4397-857f-ba8dc02fa52e", "3e3b28fa-3c2a-4b49-b7b2-a8c3b4e6e92d" }
