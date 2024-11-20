@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LuckyDraw", "LuckyDraw\LuckyDraw.csproj", "{F858A010-0D8B-4E49-9CB7-7FEBBF2D8E1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LuckyDraw", "LuckyDraw\LuckyDraw.csproj", "{F858A010-0D8B-4E49-9CB7-7FEBBF2D8E1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

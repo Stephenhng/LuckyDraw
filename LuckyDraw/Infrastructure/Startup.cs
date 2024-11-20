@@ -17,6 +17,8 @@ public class Startup (IConfiguration configuration)
            .AddInteractiveServerComponents();
         services.AddRadzenComponents();
 
+        services.AddAutoMapper(typeof(Startup));
+
         services.AddCascadingAuthenticationState();
         services.AddScoped<IdentityUserAccessor>();
         services.AddScoped<IdentityRedirectManager>();
@@ -26,12 +28,11 @@ public class Startup (IConfiguration configuration)
         {
             options.DefaultScheme = IdentityConstants.ApplicationScheme;
             options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-        })
-            .AddIdentityCookies();
+        }).AddIdentityCookies();
 
-        var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+        var connectionString = configuration.GetConnectionString("LuckyDraw") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
         services.AddDbContextPool<ApplicationDbContext>(options => options
-            .UseSqlServer(configuration.GetConnectionString("Luckydraw"))
+            .UseSqlServer(connectionString)
             .UseLazyLoadingProxies());
         services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -45,6 +46,7 @@ public class Startup (IConfiguration configuration)
         services.AddScoped<IParticipantService, ParticipantService>();
         services.AddScoped<IPrizeService, PrizeService>();
         services.AddScoped<IWinnerService, WinnerService>();
+
     }
 
     public void Configure(IApplicationBuilder application, IWebHostEnvironment environment)
