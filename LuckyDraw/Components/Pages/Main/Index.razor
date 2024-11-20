@@ -1,4 +1,6 @@
 ﻿@page "/main/index"
+@attribute [Authorize(Roles = "Admin")]
+@layout DashboardLayout
 
 <PageTitle>Home</PageTitle>
 
