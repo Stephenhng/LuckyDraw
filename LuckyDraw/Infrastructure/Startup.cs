@@ -1,9 +1,11 @@
 ﻿using LuckyDraw.Components;
 using LuckyDraw.Components.Account;
 using LuckyDraw.Data;
+using LuckyDraw.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Radzen;
 
 namespace LuckyDraw.Infrastructure;
 
@@ -13,6 +15,7 @@ public class Startup (IConfiguration configuration)
     {
         services.AddRazorComponents()
            .AddInteractiveServerComponents();
+        services.AddRadzenComponents();
 
         services.AddCascadingAuthenticationState();
         services.AddScoped<IdentityUserAccessor>();
@@ -38,6 +41,10 @@ public class Startup (IConfiguration configuration)
             .AddDefaultTokenProviders();
 
         services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+
+        services.AddScoped<IParticipantService, ParticipantService>();
+        services.AddScoped<IPrizeService, PrizeService>();
+        services.AddScoped<IWinnerService, WinnerService>();
     }
 
     public void Configure(IApplicationBuilder application, IWebHostEnvironment environment)
@@ -56,6 +63,7 @@ public class Startup (IConfiguration configuration)
         application.UseHttpsRedirection();
 
         application.UseStaticFiles();
+        application.UseRouting();
         application.UseAntiforgery();
 
         application.UseEndpoints(endpoints =>
