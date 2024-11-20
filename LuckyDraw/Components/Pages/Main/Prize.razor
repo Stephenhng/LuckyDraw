@@ -1,0 +1,55 @@
+﻿@page "/main/prize"
+@attribute [StreamRendering]
+@layout DashboardLayout
+
+@inject IMapper mapper
+@inject IPrizeService prizeService
+
+<PageTitle>Prize</PageTitle>
+
+<h3>Prize</h3>
+
+@if (prizes == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var prize in prizes)
+            {
+                <tr>
+                    <td>@prize.Id</td>
+                    <td>@prize.Name</td>
+                    <td>@prize.Quantity</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<PrizeModel>? prizes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var prizeList = await prizeService.GetAllPrizesAsync();
+
+        prizes = mapper.Map<List<PrizeModel>>(prizeList);
+    }
+
+    public class PrizeModel
+    {
+        public int Id { get; set; }
+        public required string Name { get; set; }
+        public int Quantity { get; set; }
+    }
+}

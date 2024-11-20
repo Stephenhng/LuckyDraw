@@ -1,0 +1,55 @@
+﻿@page "/main/participant"
+@attribute [StreamRendering]
+@layout DashboardLayout
+
+@inject IMapper mapper
+@inject IParticipantService participantService
+
+<PageTitle>Participant</PageTitle>
+
+<h3>Participant</h3>
+
+@if (participants == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>IC Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var participant in participants)
+            {
+                <tr>
+                    <td>@participant.Id</td>
+                    <td>@participant.Name</td>
+                    <td>@participant.IdentityNumder</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<ParticipantModel>? participants;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var participantList = await participantService.GetAllParticipantsAsync();
+
+        participants = mapper.Map<List<ParticipantModel>>(participantList);
+    }
+
+    public class ParticipantModel
+    {
+        public int Id { get; set; }
+        public string? Name { get; set; }
+        public required string IdentityNumder { get; set; }
+    }
+}

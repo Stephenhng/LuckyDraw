@@ -1,0 +1,53 @@
+﻿@page "/main/winner"
+@attribute [StreamRendering]
+@layout DashboardLayout
+
+@inject IMapper mapper
+@inject IWinnerService winnerService
+
+<PageTitle>Winner</PageTitle>
+
+<h3>Winner</h3>
+
+@if (winners == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Participant</th>
+                <th>Prize</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var winner in winners)
+            {
+                <tr>
+                    <td>@winner.ParticipantName</td>
+                    <td>@winner.PrizeName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<WinnerModel>? winners;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var winnerList = await winnerService.GetAllWinnersAsync();
+
+        winners = mapper.Map<List<WinnerModel>>(winnerList);
+    }
+
+    public class WinnerModel
+    {
+        public string? ParticipantName { get; set; }
+
+        public string? PrizeName { get; set; }
+    }
+}
