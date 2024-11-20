@@ -10,7 +10,7 @@ using Microsoft.Extensions.Primitives;
 using System.Security.Claims;
 using System.Text.Json;
 
-namespace Microsoft.AspNetCore.Routing;
+namespace LuckyDraw.Components.Account;
 internal static class IdentityComponentsEndpointRouteBuilderExtensions
 {
     // These endpoints are required by the Identity Razor components defined in the /Components/Account/Pages directory of this project.
@@ -77,9 +77,7 @@ internal static class IdentityComponentsEndpointRouteBuilderExtensions
         {
             var user = await userManager.GetUserAsync(context.User);
             if (user is null)
-            {
                 return Results.NotFound($"Unable to load user with ID '{userManager.GetUserId(context.User)}'.");
-            }
 
             var userId = await userManager.GetUserIdAsync(user);
             downloadLogger.LogInformation("User with ID '{UserId}' asked for their personal data.", userId);
@@ -89,15 +87,11 @@ internal static class IdentityComponentsEndpointRouteBuilderExtensions
             var personalDataProps = typeof(ApplicationUser).GetProperties().Where(
                 prop => Attribute.IsDefined(prop, typeof(PersonalDataAttribute)));
             foreach (var p in personalDataProps)
-            {
                 personalData.Add(p.Name, p.GetValue(user)?.ToString() ?? "null");
-            }
 
             var logins = await userManager.GetLoginsAsync(user);
             foreach (var l in logins)
-            {
                 personalData.Add($"{l.LoginProvider} external login provider key", l.ProviderKey);
-            }
 
             personalData.Add("Authenticator Key", (await userManager.GetAuthenticatorKeyAsync(user))!);
             var fileBytes = JsonSerializer.SerializeToUtf8Bytes(personalData);

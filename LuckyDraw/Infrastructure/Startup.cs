@@ -9,7 +9,7 @@ using Radzen;
 
 namespace LuckyDraw.Infrastructure;
 
-public class Startup (IConfiguration configuration)
+public class Startup(IConfiguration configuration)
 {
     public void ConfigureServices(IServiceCollection services)
     {

@@ -2,7 +2,7 @@
 using LuckyDraw.Domain;
 using static LuckyDraw.Components.Pages.Main.Winner;
 
-namespace LuckyDrawTest.Insfrastructure.Mapping;
+namespace LuckyDraw.Infrastructure.Mappings;
 
 public class WinnerMapping : Profile
 {
