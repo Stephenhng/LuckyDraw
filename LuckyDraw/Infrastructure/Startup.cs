@@ -2,6 +2,7 @@
 using LuckyDraw.Components.Account;
 using LuckyDraw.Data;
 using LuckyDraw.Services;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -31,9 +32,9 @@ public class Startup(IConfiguration configuration)
         services.AddDatabaseDeveloperPageExceptionFilter();
 
         services
-               .AddIdentity<ApplicationUser, IdentityRole>()
-               .AddEntityFrameworkStores<ApplicationDbContext>()
-               .AddDefaultTokenProviders();
+            .AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
 
         services.AddAuthentication(options =>
         {

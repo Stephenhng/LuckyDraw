@@ -2,6 +2,16 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    background-color: #F4F5F9;
+}
+
+.content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
 }
 
 main {
@@ -94,3 +104,4 @@ main {
         right: 0.75rem;
         top: 0.5rem;
     }
+

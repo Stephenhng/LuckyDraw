@@ -12,10 +12,16 @@
 
 <PageTitle>Enter Lobby</PageTitle>
 
-<h1>Enter Lobby</h1>
-<div class="row">
-    <div class="col-md-4">
-        <section>
+<div class ="col-md-4 p-4 border-1 border-primary">
+
+
+</div>
+<div class="col-md-4 p-4 border border-1 rounded bg-white shadow mb-5 ">
+    <div class="row" style="width: 100%;">
+        <h2 class="col-md-12">Enter Lobby</h2>
+    </div>
+    <div class="row" style="width: 100%;">
+        <div class="col-md-12">
             <StatusMessage Message="@errorMessage" />
             <EditForm Model="Input" method="post" OnValidSubmit="LoginUser" FormName="login">
                 <DataAnnotationsValidator />
@@ -41,7 +47,7 @@
                 </div>
 
             </EditForm>
-        </section>
+        </div>
     </div>
 </div>
 
@@ -72,23 +78,11 @@
         if (result.Succeeded)
         {
             Logger.LogInformation("User logged in.");
-            RedirectManager.RedirectTo("main/index");
-        }
-        else if (result.RequiresTwoFactor)
-        {
-            RedirectManager.RedirectTo(
-                "Account/LoginWith2fa",
-                new() { ["returnUrl"] = ReturnUrl, ["rememberMe"] = false });
-        }
-        else if (result.IsLockedOut)
-        {
-            Logger.LogWarning("User account locked out.");
-            RedirectManager.RedirectTo("Account/Lockout");
+            var redirectUrl = ReturnUrl ?? $"{Input.Name}/index";
+            RedirectManager.RedirectTo(redirectUrl);
         }
         else
-        {
             errorMessage = "Error: Invalid login attempt.";
-        }
     }  
 
     private sealed class InputModel
