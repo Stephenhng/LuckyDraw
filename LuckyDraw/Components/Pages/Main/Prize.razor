@@ -1,5 +1,6 @@
 ﻿@page "/main/prize"
 @attribute [StreamRendering]
+@attribute [Authorize(Roles = "Admin")]
 @layout DashboardLayout
 
 @inject IMapper mapper

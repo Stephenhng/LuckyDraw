@@ -1,5 +1,27 @@
-﻿<h3>Index</h3>
+﻿@page "/view/index"
+@rendermode InteractiveServer
+@layout MainLayout
+
+@inject HubBase HubBase
+@inject NavigationManager NavigationManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject IJSRuntime JS
+@implements IAsyncDisposable
+
+<PageTitle>View</PageTitle>
+
+<h3>View</h3>
 
 @code {
+    protected override async Task OnInitializedAsync()
+    {
+        var userName = SignInManager.Context.User.Identity?.Name;
+        var hubUri = NavigationManager.ToAbsoluteUri($"/lobby?username={userName}");
+        await HubBase.ConnectAsync(hubUri);
+    }
 
+    public async ValueTask DisposeAsync()
+    {
+        await HubBase.DisposeAsync();
+    }
 }
